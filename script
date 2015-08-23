@@ -16,7 +16,7 @@ GetSysCPU() {
 }
 
 ExecCommand() {
-   tcpdump -l -nn -t -q "udp and dst host $ip"|./analysis
+   tcpdump -l -nn -t -q "udp and dst host $ip"|./analysis 2
 }
 
 cpu=`GetSysCPU`
@@ -32,7 +32,7 @@ do {
    if [ -z $PID ] 
    then { 
         ExecCommand
-	PID=`GetPID root tcpdump`
+	     PID=`GetPID root tcpdump`
    }
    fi
    
@@ -41,9 +41,9 @@ do {
   	 cpu=`GetSysCPU`
    	 if [ $cpu -gt 2 ] 
    	 then {
-   	 	echo "large"
+   	 	kill -stop $PID
    	 } else {
-   		echo "this is ok"
+   		kill -cont $PID
    	 }
    	 fi
    }
